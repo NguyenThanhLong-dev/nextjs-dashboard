@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Suspense } from 'react';import Link from 'next/link';
 import NavLinks from './nav-links';
 
 export default function SideNav() {
@@ -8,7 +8,9 @@ export default function SideNav() {
         <span className="text-xl font-bold">Acme</span>
       </Link>
       <div className="flex grow flex-row gap-2 md:flex-col">
-        <NavLinks />
+      <Suspense fallback={<div className="h-12 w-full rounded-md bg-gray-50" />}>
+  <NavLinks />
+</Suspense>
       </div>
     </div>
   );
