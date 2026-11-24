@@ -80,3 +80,35 @@ export async function fetchInvoicesPages(query: string): Promise<number> {
   if (error) throw new Error('Failed to fetch invoice count');
   return Math.max(1, Math.ceil((count ?? 0) / ITEMS_PER_PAGE));
 }
+import { notFound } from 'next/navigation';
+
+export type CustomerField = { id: string; name: string };
+
+export type InvoiceForm = {
+  id: string;
+  customer_id: string;
+  amount: number;
+  status: 'pending' | 'paid';
+};
+
+export async function fetchCustomers(): Promise<CustomerField[]> {
+  const { data, error } = await supabase
+    .from('customers')
+    .select('id, name')
+    .order('name');
+  if (error) throw new Error('Failed to fetch customers');
+  return data;
+}
+
+export async function fetchInvoiceById(id: string): Promise<InvoiceForm> {
+  const { data, error } = await supabase
+    .from('invoices')
+    .select('id, customer_id, amount, status')
+    .eq('id', id)
+    .maybeSingle();
+
+  // id sai định dạng hoặc không tồn tại -> trang 404
+  if (error || !data) notFound();
+
+  return { ...data, amount: data.amount / 100 } as InvoiceForm;
+}

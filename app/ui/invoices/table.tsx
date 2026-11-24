@@ -1,4 +1,5 @@
 import { fetchFilteredInvoices } from '@/app/lib/data';
+import { UpdateInvoice, DeleteInvoice } from './buttons';
 
 export default async function InvoicesTable({
   query,
@@ -19,6 +20,9 @@ export default async function InvoicesTable({
             <th className="px-4 py-3 font-medium">Amount</th>
             <th className="px-4 py-3 font-medium">Date</th>
             <th className="px-4 py-3 font-medium">Status</th>
+            <th className="px-4 py-3 font-medium">
+              <span className="sr-only">Actions</span>
+            </th>
           </tr>
         </thead>
         <tbody className="bg-white">
@@ -39,11 +43,17 @@ export default async function InvoicesTable({
                   {inv.status}
                 </span>
               </td>
+              <td className="px-4 py-3">
+                <div className="flex gap-2">
+                  <UpdateInvoice id={inv.id} />
+                  <DeleteInvoice id={inv.id} />
+                </div>
+              </td>
             </tr>
           ))}
           {invoices.length === 0 && (
             <tr>
-              <td colSpan={5} className="px-4 py-6 text-center text-gray-500">
+              <td colSpan={6} className="px-4 py-6 text-center text-gray-500">
                 No invoices found.
               </td>
             </tr>

@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import Search from '@/app/ui/search';
 import InvoicesTable from '@/app/ui/invoices/table';
 import Pagination from '@/app/ui/invoices/pagination';
+import { CreateInvoice } from '@/app/ui/invoices/buttons';
 import { fetchInvoicesPages } from '@/app/lib/data';
 import { lusitana } from '@/app/ui/fonts';
 
@@ -11,9 +12,14 @@ export default function Page({ searchParams }: { searchParams: SearchParams }) {
   return (
     <div className="w-full">
       <h1 className={`${lusitana.className} mb-4 text-2xl`}>Invoices</h1>
-      <Suspense>
-        <Search placeholder="Search by customer name or email..." />
-      </Suspense>
+      <div className="flex items-center gap-2">
+        <div className="flex-1">
+          <Suspense>
+            <Search placeholder="Search by customer name or email..." />
+          </Suspense>
+        </div>
+        <CreateInvoice />
+      </div>
       <Suspense fallback={<div className="mt-6 h-64 animate-pulse rounded-lg bg-gray-100" />}>
         <InvoicesContent searchParams={searchParams} />
       </Suspense>
