@@ -5,6 +5,9 @@ import Pagination from '@/app/ui/invoices/pagination';
 import { CreateInvoice } from '@/app/ui/invoices/buttons';
 import { fetchInvoicesPages } from '@/app/lib/data';
 import { lusitana } from '@/app/ui/fonts';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = { title: 'Invoices' };   // customers thì 'Customers'
 
 type SearchParams = Promise<{ query?: string; page?: string }>;
 
